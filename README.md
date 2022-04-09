@@ -1,4 +1,4 @@
-# ReNam
+# RēˈNām
 A file renamer to help with mass renaming of files.
 
 This is a work in progress. Bellow i'll list a few of the features i'm aming to implement:
