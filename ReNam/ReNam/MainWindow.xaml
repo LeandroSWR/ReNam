@@ -1,0 +1,30 @@
+﻿<Window x:Class="ReNam.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReNam"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="591" Width="1095" MinHeight="340" MinWidth="740" SizeChanged="Window_SizeChanged">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!-- other resources -->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#FF3C3F41" HorizontalAlignment="Stretch">
+        <GroupBox x:Name="_GbOriginalName" Header="Original Names" Margin="108,51,547,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
+            <ListBox x:Name="_ONList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50"/>
+        </GroupBox>
+        <Rectangle HorizontalAlignment="Stretch" Height="50" Fill="#FF2E2E2E" Stroke="#FF232323" VerticalAlignment="Top"/>
+        <Label x:Name="_ReLabel" Content="Rename" Height="38" Margin="98,6,0,0" Foreground="#FF909090" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Width="95"/>
+        <GroupBox x:Name="_GbNewNames" Header="New Names" Margin="645,51,10,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
+            <ListBox x:Name="_NNList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50"/>
+        </GroupBox>
+
+
+
+    </Grid>
+</Window>
