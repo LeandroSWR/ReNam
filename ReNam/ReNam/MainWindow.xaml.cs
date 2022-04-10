@@ -24,14 +24,14 @@ namespace ReNam
         Thickness gbonMargin;
         Thickness gbnnMargin;
 
-        List<string> onList;
+        List<FileName> onList;
         List<string> nnList;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            onList = new List<string>();
+            onList = new List<FileName>();
             nnList = new List<string>();
 
             // Initialize the margin variables
@@ -62,18 +62,60 @@ namespace ReNam
                 if (files != null)
                 {
                     string fileName;
-                    string fileFormat;
                     for (int i = 0; i < files.Length; i++)
                     {
                         fileName = System.IO.Path.GetFileName(files[i]);
-                        fileFormat = fileName.Remove(0, fileName.LastIndexOf('.') + 1);
+
+                        // When we drop items that have no path we still want the name :)
+                        if (fileName == null)
+                        {
+                            fileName = files[i];
+                        }
+                        
+                        // If the method was called from the original names list
                         if ((ListBox)sender == _ONList)
                         {
-                            _ONList.Items.Add(new { Name = fileName.Remove(fileName.LastIndexOf('.')), Format = fileFormat });
+                            onList.Clear();
+                            _ONList.Items.Clear();
+
+                            // Creates a new temporary file
+                            FileName currentFile = 
+                                new FileName(
+                                    fileName.Remove(fileName.LastIndexOf('.')), 
+                                    files[i].Replace(fileName, ""),
+                                    fileName.Remove(0, fileName.LastIndexOf('.'))
+                                    );
+
+                            onList.Add(currentFile);
+                            _ONList.Items.Add(new { Name = currentFile.Name, Format = currentFile.Extention });
+
+                            if (_ONList.Items.Count <= _NNList.Items.Count)
+                            {
+                                _NNList.Items[_ONList.Items.Count - 1] = 
+                                    new { 
+                                        Name = nnList[_ONList.Items.Count - 1], 
+                                        Format = onList[_ONList.Items.Count - 1].Extention};
+                            }
+                            
                         }
+                        // If the method was called from the new names list
                         else if ((ListBox)sender == _NNList)
                         {
-                            _NNList.Items.Add(new { Name = System.IO.Path.GetFileName(files[i])});
+                            onList.Clear();
+                            _ONList.Items.Clear();
+
+                            fileName = fileName.Remove(fileName.LastIndexOf('.'));
+
+                            nnList.Add(fileName);
+                            if (_ONList.Items.Count > _NNList.Items.Count)
+                            {
+                                // Update fileFormat to get the matching format from the original item
+                                _NNList.Items.Add(new { Name = fileName, Format = onList[_NNList.Items.Count].Extention });
+                            }
+                            else
+                            {
+                                _NNList.Items.Add(new { Name = fileName, Visibility = "Hidden"});
+                            }
                         }
                     }
                 }
