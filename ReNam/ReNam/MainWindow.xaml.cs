@@ -61,7 +61,18 @@ namespace ReNam
 
                 if (files != null)
                 {
-                    string fileName;
+                    if ((ListBox)sender == _ONList)
+                    {
+                        onList.Clear();
+                        _ONList.Items.Clear();
+                    }
+                    else if ((ListBox)sender == _NNList)
+                    {
+                        nnList.Clear();
+                        _NNList.Items.Clear();
+                    }
+
+                        string fileName;
                     for (int i = 0; i < files.Length; i++)
                     {
                         fileName = System.IO.Path.GetFileName(files[i]);
@@ -75,9 +86,6 @@ namespace ReNam
                         // If the method was called from the original names list
                         if ((ListBox)sender == _ONList)
                         {
-                            onList.Clear();
-                            _ONList.Items.Clear();
-
                             // Creates a new temporary file
                             FileName currentFile = 
                                 new FileName(
@@ -101,9 +109,6 @@ namespace ReNam
                         // If the method was called from the new names list
                         else if ((ListBox)sender == _NNList)
                         {
-                            nnList.Clear();
-                            _NNList.Items.Clear();
-
                             fileName = fileName.Remove(fileName.LastIndexOf('.'));
 
                             nnList.Add(fileName);
