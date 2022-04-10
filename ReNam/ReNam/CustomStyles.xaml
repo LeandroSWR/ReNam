@@ -44,4 +44,59 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border" Padding="2" SnapsToDevicePixels="true">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFB7B7B7" Offset="0"/>
+                                        <GradientStop Color="#FF9B9B9B" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Rounded TextBoxs-->
+    <ControlTemplate x:Key="RoundedTextBoxControlTemplate" TargetType="{x:Type TextBoxBase}">
+        <Border x:Name="Border"
+                BorderThickness="0" CornerRadius="4" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="2,0,2,0">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCC00" Offset="0"/>
+                    <GradientStop Color="#FFFF9C00" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+    </ControlTemplate>
+
+    <!-- List Item Template-->
+    <DataTemplate x:Key="ListBoxItemCustomTemplate">
+        <Grid Height="27">
+            <!--Displays the file name-->
+            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="12"/>
+            <!-- Displays the file format-->
+            <TextBox x:Name="roundedTextBox" Template="{StaticResource RoundedTextBoxControlTemplate}" 
+                     Text="{Binding Path=Format, Mode=OneWay}" 
+                     HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+                     IsReadOnly="True" IsEnabled="False" FontSize="12">
+            </TextBox>
+        </Grid>
+    </DataTemplate>
+    <Style TargetType="ListBox">
+        <Setter Property="ItemTemplate" Value="{StaticResource ListBoxItemCustomTemplate}"/>
+    </Style>
 </ResourceDictionary>

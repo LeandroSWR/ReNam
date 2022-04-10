@@ -11,20 +11,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <!-- other resources -->
+            
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="#FF3C3F41" HorizontalAlignment="Stretch">
         <GroupBox x:Name="_GbOriginalName" Header="Original Names" Margin="108,51,547,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
-            <ListBox x:Name="_ONList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50"/>
+            <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" AllowDrop="True" x:Name="_ONList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50" Drop="GetFilesData" Foreground="#FFBBBBBB"/>
         </GroupBox>
         <Rectangle HorizontalAlignment="Stretch" Height="50" Fill="#FF2E2E2E" Stroke="#FF232323" VerticalAlignment="Top"/>
         <Label x:Name="_ReLabel" Content="Rename" Height="38" Margin="98,6,0,0" Foreground="#FF909090" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Width="95"/>
         <GroupBox x:Name="_GbNewNames" Header="New Names" Margin="645,51,10,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
-            <ListBox x:Name="_NNList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50"/>
+            <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" AllowDrop="True" x:Name="_NNList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50" Drop="GetFilesData"/>
         </GroupBox>
-
-
-
     </Grid>
 </Window>

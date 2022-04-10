@@ -24,9 +24,15 @@ namespace ReNam
         Thickness gbonMargin;
         Thickness gbnnMargin;
 
+        List<string> onList;
+        List<string> nnList;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            onList = new List<string>();
+            nnList = new List<string>();
 
             // Initialize the margin variables
             gbonMargin = _GbOriginalName.Margin;
@@ -45,6 +51,33 @@ namespace ReNam
 
             _GbOriginalName.Margin = gbonMargin;
             _GbNewNames.Margin = gbnnMargin;
+        }
+
+        private void GetFilesData(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (files != null)
+                {
+                    string fileName;
+                    string fileFormat;
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        fileName = System.IO.Path.GetFileName(files[i]);
+                        fileFormat = fileName.Remove(0, fileName.LastIndexOf('.') + 1);
+                        if ((ListBox)sender == _ONList)
+                        {
+                            _ONList.Items.Add(new { Name = fileName.Remove(fileName.LastIndexOf('.')), Format = fileFormat });
+                        }
+                        else if ((ListBox)sender == _NNList)
+                        {
+                            _NNList.Items.Add(new { Name = System.IO.Path.GetFileName(files[i])});
+                        }
+                    }
+                }
+            }
         }
     }
 }
