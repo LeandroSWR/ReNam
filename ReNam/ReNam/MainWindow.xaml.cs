@@ -101,8 +101,8 @@ namespace ReNam
                         // If the method was called from the new names list
                         else if ((ListBox)sender == _NNList)
                         {
-                            onList.Clear();
-                            _ONList.Items.Clear();
+                            nnList.Clear();
+                            _NNList.Items.Clear();
 
                             fileName = fileName.Remove(fileName.LastIndexOf('.'));
 
