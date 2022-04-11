@@ -5,23 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReNam"
         mc:Ignorable="d"
-        Title="MainWindow" Height="591" Width="1095" MinHeight="340" MinWidth="740" SizeChanged="Window_SizeChanged">
+        Title="MainWindow" Height="640" Width="1095" MinHeight="340" MinWidth="740" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="#FF3C3F41" HorizontalAlignment="Stretch">
-        <GroupBox x:Name="_GbOriginalName" Header="Original Names" Margin="108,51,547,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
+        <GroupBox x:Name="_GbOriginalName" Header="Original Names" Margin="110,51,547,200" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
             <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" AllowDrop="True" x:Name="_ONList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50" Drop="GetFilesData" Foreground="#FFBBBBBB"/>
         </GroupBox>
         <Rectangle HorizontalAlignment="Stretch" Height="50" Fill="#FF2E2E2E" Stroke="#FF232323" VerticalAlignment="Top"/>
         <Label x:Name="_ReLabel" Content="Rename" Height="38" Margin="98,6,0,0" Foreground="#FF909090" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Width="95"/>
-        <GroupBox x:Name="_GbNewNames" Header="New Names" Margin="645,51,10,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
+        <GroupBox x:Name="_GbNewNames" Header="New Names" Margin="645,51,10,200" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="230">
             <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" AllowDrop="True" x:Name="_NNList" Background="{x:Null}" BorderBrush="#FF535353" Margin="7,3,7,50" Drop="GetFilesData"/>
+        </GroupBox>
+        <GroupBox x:Name="_GbRulesList" Header="Rules" Margin="110,429,10,10" Foreground="#FFBBBBBB" MinWidth="380" MinHeight="185" Visibility="Visible">
+            <Grid>
+                <ToolBar Margin="5,2,5,0" VerticalAlignment="Top" Height="30" Style="{StaticResource Toolbar}">
+                    <Button Content="Add" Foreground="#FFBBBBBB"></Button>
+                    <Button Content="Remove" Foreground="#FFBBBBBB"></Button>
+                    <Button Content="Up" Foreground="#FFBBBBBB"></Button>
+                    <Button Content="Down" Foreground="#FFBBBBBB"></Button>
+                </ToolBar>
+                <ListView Margin="5,30,5,5" x:Name="Rules" Background="#FF343434" BorderBrush="#FF535353" Foreground="#FFBBBBBB">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <!-- Set any properties you want to set -->
+                                    <Setter Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF828587"/>
+                                                <GradientStop Color="#FF46494B" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Foreground" Value="#FFBBBBBB" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ID}" />
+                            <GridViewColumn Header="Rule" Width="120" DisplayMemberBinding="{Binding Rule}" />
+                            <GridViewColumn Header="Statement" Width="500" DisplayMemberBinding="{Binding Statement}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                
+            </Grid>
         </GroupBox>
     </Grid>
 </Window>
