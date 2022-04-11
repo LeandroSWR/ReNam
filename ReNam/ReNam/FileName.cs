@@ -12,7 +12,7 @@ namespace ReNam
         private string extention;
         public string Extention 
         { 
-            get => extention.Remove(0, 1); 
+            get => extention.Substring(1); 
         }
         
         public string FullPath 
