@@ -83,6 +83,27 @@
         </Border>
     </ControlTemplate>
 
+    <!--Rounded Buttons-->
+    <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="4" Background="#FF4C5052" BorderThickness="1" Padding="2" BorderBrush="#FF5E6060">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--GridViewLines-->
+    <DataTemplate x:Key="GridViewLines">
+        <Border BorderBrush="#FF000000" BorderThickness="1,1,0,0" Margin="-6,-2,-6,-2">
+            <StackPanel Margin="6,2,6,2">
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
     <!-- List Item Template-->
     <DataTemplate x:Key="ListBoxItemCustomTemplate">
         <Grid Height="27">
@@ -127,6 +148,21 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--Text First Checkbox-->
+    <!--This was needed since just defining the checkbox as right to left would invert the check sprite-->
+    <Style x:Key="TextAlignLeft" TargetType="CheckBox">
+        <Style.Resources>
+            <Style TargetType="Path">
+                <Setter Property="FlowDirection" Value="LeftToRight" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="FlowDirection" Value="LeftToRight" />
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="FlowDirection" Value="RightToLeft" />
     </Style>
 
 </ResourceDictionary>

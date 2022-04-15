@@ -24,11 +24,15 @@ namespace ReNam
         // Need to save the margins to a variable at start to save resources
         private Thickness gbonMargin;
         private Thickness gbnnMargin;
+        private Thickness gbRulesMargin;
+        private Thickness bttRename;
 
         private List<FileName> onList;
         private List<string> nnList;
 
         private List<string> allfiles;
+
+        private AddRuleWindow rulesWindow;
 
         public MainWindow()
         {
@@ -41,20 +45,35 @@ namespace ReNam
             // Initialize the margin variables
             gbonMargin = _GbOriginalName.Margin;
             gbnnMargin = _GbNewNames.Margin;
+            gbRulesMargin = _GbRulesList.Margin;
+            bttRename = _RenameBtt.Margin;
         }
 
         // Update the Margins so the GroupBoxes never intersect
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            // Define the right margin for Original Names
             gbonMargin.Right = Application.Current.MainWindow.Width - _ReLabel.TransformToAncestor(
                         Application.Current.MainWindow).Transform(
                         new Point(0, 0)).X;
+            // Define the bottom margin
+            gbonMargin.Bottom = Application.Current.MainWindow.Height / 4 + 10;
+
+            // Define the left margin for New Names
             gbnnMargin.Left = Application.Current.MainWindow.Width - _ReLabel.TransformToAncestor(
                         Application.Current.MainWindow).Transform(
                         new Point(0, 0)).X + _ReLabel.Width;
+            // Define the bottom margin
+            gbnnMargin.Bottom = gbonMargin.Bottom;
+
+            // Define the top margin for the Rules area
+            gbRulesMargin.Top = Application.Current.MainWindow.Height / 4 * 3 - 50;
+
+
 
             _GbOriginalName.Margin = gbonMargin;
             _GbNewNames.Margin = gbnnMargin;
+            _GbRulesList.Margin = gbRulesMargin;
         }
 
         private bool CheckIfDirectory(string path) => 
@@ -62,6 +81,12 @@ namespace ReNam
 
         private void GetFilesData(object sender, DragEventArgs e)
         {
+            // If we're using rules don't allow file drop on nn
+            if ((ListBox)sender == _NNList && _UseRulesCheck.IsChecked == true)
+            {
+                return;
+            }
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 // Get all file paths on drop
@@ -157,6 +182,22 @@ namespace ReNam
                     }
                 }
             }
-        } 
+        }
+
+        private void OnAddRule(object sender, RoutedEventArgs e)
+        {
+            rulesWindow = new AddRuleWindow();
+            rulesWindow.Show();
+        }
+
+        /// <summary>
+        /// Removes the currently selected rule from the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnRemoveRule(object sender, RoutedEventArgs e)
+        {
+            _Rules.Items.Remove(_Rules.SelectedItem);
+        }
     }
 }
