@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,8 +30,19 @@ namespace ReNam
         private Thickness gbRulesMargin;
         private Thickness bttRename;
 
-        private List<FileName> onList;
-        private List<string> nnList;
+        private ObservableCollection<FileName> onList;
+        public ObservableCollection<FileName> ONList
+        {
+            get => onList;
+            set => onList = value;
+        }
+
+        private ObservableCollection<FileName> nnList;
+        public ObservableCollection<FileName> NNList
+        {
+            get => nnList;
+            set => nnList = value;
+        }
 
         private List<string> allfiles;
 
@@ -38,8 +52,8 @@ namespace ReNam
         {
             InitializeComponent();
 
-            onList = new List<FileName>();
-            nnList = new List<string>();
+            onList = new ObservableCollection<FileName>();
+            nnList = new ObservableCollection<FileName>();
             allfiles = new List<string>();
 
             // Initialize the margin variables
@@ -47,6 +61,9 @@ namespace ReNam
             gbnnMargin = _GbNewNames.Margin;
             gbRulesMargin = _GbRulesList.Margin;
             bttRename = _RenameBtt.Margin;
+
+            _ONList.ItemsSource = ONList;
+            _NNList.ItemsSource = NNList;
         }
 
         // Update the Margins so the GroupBoxes never intersect
@@ -68,8 +85,6 @@ namespace ReNam
 
             // Define the top margin for the Rules area
             gbRulesMargin.Top = Application.Current.MainWindow.Height / 4 * 3 - 50;
-
-
 
             _GbOriginalName.Margin = gbonMargin;
             _GbNewNames.Margin = gbnnMargin;
@@ -122,12 +137,10 @@ namespace ReNam
             if ((ListBox)sender == _ONList)
             {
                 onList.Clear();
-                _ONList.Items.Clear();
             }
             else if ((ListBox)sender == _NNList)
             {
                 nnList.Clear();
-                _NNList.Items.Clear();
             }
             
             for (int i = 0; i < allfiles.Count; i++)
@@ -141,44 +154,38 @@ namespace ReNam
                     fileName = allfiles[i];
                 }
 
+                // Creates a new temporary file
+                FileName currentFile =
+                    new FileName(
+                        fileName.Remove(fileName.LastIndexOf('.')),
+                        allfiles[i].Replace(fileName, ""),
+                        fileName.Substring(fileName.LastIndexOf('.'))
+                        );
+
                 // If the method was called from the original names list
                 if ((ListBox)sender == _ONList)
                 {
-                    // Creates a new temporary file
-                    FileName currentFile =
-                        new FileName(
-                            fileName.Remove(fileName.LastIndexOf('.')),
-                            allfiles[i].Replace(fileName, ""),
-                            fileName.Substring(fileName.LastIndexOf('.'))
-                            );
+                    ONList.Add(currentFile);
 
-                    onList.Add(currentFile);
-                    _ONList.Items.Add(new { Name = currentFile.Name, Format = currentFile.Extention });
-
-                    if (_ONList.Items.Count <= _NNList.Items.Count)
+                    if (onList.Count <= nnList.Count)
                     {
-                        _NNList.Items[_ONList.Items.Count - 1] =
-                            new {
-                                Name = nnList[_ONList.Items.Count - 1],
-                                Format = onList[_ONList.Items.Count - 1].Extention
-                            };
+                        NNList[onList.Count - 1].Visibility = "Visible";
+                        NNList[onList.Count - 1].Format = onList[onList.Count - 1].Format;
                     }
-
                 }
                 // If the method was called from the new names list
                 else if ((ListBox)sender == _NNList)
                 {
-                    fileName = fileName.Remove(fileName.LastIndexOf('.'));
-
-                    nnList.Add(fileName);
-                    if (_ONList.Items.Count > _NNList.Items.Count)
+                    NNList.Add(currentFile);
+                    if (onList.Count >= nnList.Count)
                     {
+                        
                         // Update fileFormat to get the matching format from the original item
-                        _NNList.Items.Add(new { Name = fileName, Format = onList[_NNList.Items.Count].Extention });
+                        NNList[nnList.Count - 1].Format = onList[nnList.Count - 1].Format;
                     }
                     else
                     {
-                        _NNList.Items.Add(new { Name = fileName, Visibility = "Hidden" });
+                        NNList[nnList.Count - 1].Visibility = "Hidden";
                     }
                 }
             }

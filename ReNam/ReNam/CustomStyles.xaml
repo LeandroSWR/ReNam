@@ -108,13 +108,12 @@
     <DataTemplate x:Key="ListBoxItemCustomTemplate">
         <Grid Height="27">
             <!--Displays the file name-->
-            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="12"/>
+            <TextBlock Margin="5,0,0,0" Text="{Binding Path=Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="12"/>
             <!-- Displays the file format-->
             <TextBox x:Name="roundedTextBox" Template="{StaticResource RoundedTextBoxControlTemplate}" 
-                     Text="{Binding Path=Format, Mode=OneWay}" Visibility="{Binding Visibility}"
+                     Text="{Binding Path=Format, Mode=TwoWay}" Visibility="{Binding Path=Visibility, Mode=TwoWay}"
                      HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
-                     IsReadOnly="True" IsEnabled="False" FontSize="12">
-            </TextBox>
+                     IsReadOnly="True" IsEnabled="False" FontSize="12"/>
         </Grid>
     </DataTemplate>
     <Style TargetType="ListBox">

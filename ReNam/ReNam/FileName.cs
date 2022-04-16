@@ -1,30 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ReNam
 {
-    struct FileName
+    public class FileName
     {
-        public string Name { get; set; }
-        public string Path { get; }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set => name = value;
+        }
 
-        private string extention;
-        public string Extention 
+        private string path;
+        public string Path 
         { 
-            get => extention.Substring(1); 
+            get => path; 
+        }
+
+        private string format;
+        public string Format 
+        { 
+            get => format.Substring(1);
+            set => format = value;
         }
         
         public string FullPath 
         { 
-            get => String.Format(Path + Name + extention);
+            get => String.Format(Path + Name + format);
         }
 
-        public FileName(string name, string path, string extention)
+        private string visibility;
+        public string Visibility
         {
-            Name = name;
-            Path = path;
-            this.extention = extention;
+            get => visibility;
+            set => visibility = value;
+        }
+
+        public FileName(string name, string path, string format, string visibility = "Visible")
+        {
+            this.name = name;
+            this.path = path;
+            this.format = format;
+            this.visibility = visibility;
         }
     }
 }

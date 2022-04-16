@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReNam"
         mc:Ignorable="d"
-        Title="AddRuleWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="AddRuleWindow" Height="400" Width="640" MaxWidth="640" MaxHeight="400" MinHeight="400" MinWidth="640">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#FF3C3F41">
+        <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" Background="#FF343434" BorderBrush="#FF535353" Foreground="#FFBBBBBB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="300" Margin="16,16,0,0"/>
+        <GroupBox HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,16,0" Foreground="#FFBBBBBB" Width="450" Height="310" Header="Configuration:"></GroupBox>
+        <Button Width="200" Margin="68,331,372,10"/>
+        <Button Width="200" Margin="399,331,41,10"/>
     </Grid>
 </Window>
