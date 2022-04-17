@@ -44,6 +44,13 @@ namespace ReNam
             set => nnList = value;
         }
 
+        private ObservableCollection<IRule> rulesList;
+        public ObservableCollection<IRule> RulesList
+        {
+            get => rulesList;
+            set => rulesList = value;
+        }
+
         private List<string> allfiles;
 
         private AddRuleWindow rulesWindow;
@@ -54,6 +61,7 @@ namespace ReNam
 
             onList = new ObservableCollection<FileName>();
             nnList = new ObservableCollection<FileName>();
+            rulesList = new ObservableCollection<IRule>();
             allfiles = new List<string>();
 
             // Initialize the margin variables
@@ -64,8 +72,9 @@ namespace ReNam
 
             _ONList.ItemsSource = ONList;
             _NNList.ItemsSource = NNList;
+            _Rules.ItemsSource = RulesList;
         }
-
+        
         // Update the Margins so the GroupBoxes never intersect
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -193,8 +202,21 @@ namespace ReNam
 
         private void OnAddRule(object sender, RoutedEventArgs e)
         {
-            rulesWindow = new AddRuleWindow();
+            rulesWindow = new AddRuleWindow(null);
+
             rulesWindow.Show();
+
+            rulesWindow.Closing += RuleAdded;
+        }
+
+        public void RuleAdded(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (rulesWindow.CurRule != null)
+            {
+                rulesWindow.CurRule.ID = RulesList.Count.ToString();
+                RulesList.Add(rulesWindow.CurRule);
+            }
+            
         }
 
         /// <summary>

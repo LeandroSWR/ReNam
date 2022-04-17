@@ -14,9 +14,73 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="#FF3C3F41">
-        <ListBox ItemTemplate="{DynamicResource ListBoxItemCustomTemplate}" Background="#FF343434" BorderBrush="#FF535353" Foreground="#FFBBBBBB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="300" Margin="16,16,0,0"/>
-        <GroupBox HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,16,0" Foreground="#FFBBBBBB" Width="450" Height="310" Header="Configuration:"></GroupBox>
-        <Button Width="200" Margin="68,331,372,10"/>
-        <Button Width="200" Margin="399,331,41,10"/>
+        <ListBox x:Name="_RulesList" Background="#FF343434" 
+                 BorderBrush="#FF535353" Foreground="#FFBBBBBB" HorizontalAlignment="Left" 
+                 VerticalAlignment="Top" Width="130" Height="300" Margin="16,16,0,0" SelectionChanged="OnSelectionChanged" SelectedIndex="0">
+            <TextBlock Text="Insert"></TextBlock>
+            <TextBlock Text="Delete"></TextBlock>
+            <TextBlock Text="Remove"></TextBlock>
+            <TextBlock Text="Replace"></TextBlock>
+            <TextBlock Text="Rearrange"></TextBlock>
+            <TextBlock Text="Extension"></TextBlock>
+            <TextBlock Text="Strip"></TextBlock>
+            <TextBlock Text="Case"></TextBlock>
+            <TextBlock Text="Serialize"></TextBlock>
+            <TextBlock Text="Randomize"></TextBlock>
+            <TextBlock Text="Padding"></TextBlock>
+            <TextBlock Text="Clean Up"></TextBlock>
+            <TextBlock Text="Reformat Date"></TextBlock>
+            <TextBlock Text="User Input"></TextBlock>
+        </ListBox>
+        <GroupBox HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,16,0" 
+                  Foreground="#FFBBBBBB" Width="450" Height="310" Header="Configuration:">
+            <StackPanel x:Name="_InsertPanel">
+                <TextBlock Text="Insert:" Margin="15,35,0,0" HorizontalAlignment="Left"/>
+                <TextBox x:Name="_InsertText" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,-15,0,0" Height="18" Width="340"/>
+                
+                <TextBlock Text="Where:" HorizontalAlignment="Left" Margin="15,60,0,0"/>
+                <StackPanel HorizontalAlignment="Left" Margin="75,-38,0,0">
+                    <RadioButton x:Name="_InsertRBPrefix" Content="Prefix" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" IsChecked="True" Checked="OnChecked"/>
+                    <RadioButton x:Name="_InsertRBSuffix" Content="Suffix" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" Checked="OnChecked"/>
+                    
+                    <RadioButton x:Name="_InsertRBPosition" Content="Position:" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" Checked="OnChecked"/>
+                    <Slider x:Name="_InsertPositionNum" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,-18,0,0" Height="18" Width="60" Maximum="260"/>
+                    <CheckBox x:Name="_InsertPositionLRCheck" Margin="165,-16,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FFBBBBBB" Height="16" FontSize="11"/>
+                    <TextBlock Height="18" Margin="182,-17,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Right-To-Left"/>
+                    
+                    <RadioButton x:Name="_InsertRBAfterText" Content="After Text:" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" Checked="OnChecked"/>
+                    <TextBox x:Name="_InsertATTextBox" Margin="100,-18,0,0" Height="18" Width="151" HorizontalAlignment="Left"/>
+                    
+                    <RadioButton x:Name="_InsertRBBeforeText" Content="Before Text:" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" Checked="OnChecked"/>
+                    <TextBox x:Name="_InsertBTTextBox" Margin="100,-18,0,0" Height="18" HorizontalAlignment="Left" Width="151"/>
+
+                    <RadioButton x:Name="_InsertRBReplaceCN" Content="Replace Current Name" Foreground="#FFBBBBBB" Margin="0,2,0,0" Height="18" Checked="OnChecked"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button Margin="16,0,180,10" Height="25" Foreground="#FFBBBBBB" BorderBrush="#FF1F1F21" VerticalAlignment="Bottom" Click="OnAddRule">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF343434" Offset="0.65"/>
+                    <GradientStop Color="#FF3C3F41" Offset="1"/>
+                    <GradientStop Color="#FF3A3C3E" Offset="0"/>
+                    <GradientStop Color="#FF343535" Offset="0.35"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Icons/plusSign.png" Width="16" Height="16" />
+                <TextBlock Margin="5,0">Add Rule</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button Margin="487,0,16,10" Height="25" Content="Close" Foreground="#FFBBBBBB" BorderBrush="#FF1F1F21" VerticalAlignment="Bottom" Click="OnClose">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF343434" Offset="0.65"/>
+                    <GradientStop Color="#FF3C3F41" Offset="1"/>
+                    <GradientStop Color="#FF3A3C3E" Offset="0"/>
+                    <GradientStop Color="#FF343535" Offset="0.35"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>
