@@ -6,7 +6,7 @@ namespace ReNam
 {
     public interface IRule
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string Rule { get; }
         public string Statement { get; }
 

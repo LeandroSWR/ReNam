@@ -48,8 +48,8 @@ namespace ReNam
             set => beforeTextString = value;
         }
 
-        private string id;
-        public string ID
+        private int id;
+        public int ID
         {
             get => id; set => id = value;
         }

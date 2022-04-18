@@ -202,6 +202,7 @@ namespace ReNam
 
         private void OnAddRule(object sender, RoutedEventArgs e)
         {
+            // Needs a check for when we're sending a rule for editing
             rulesWindow = new AddRuleWindow(null);
 
             rulesWindow.Show();
@@ -209,11 +210,17 @@ namespace ReNam
             rulesWindow.Closing += RuleAdded;
         }
 
+        /// <summary>
+        /// When the add rule window closes we check if a rule was created
+        /// </summary>
+        /// <param name="sender">The object that sent the event</param>
+        /// <param name="e">The event</param>
         public void RuleAdded(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (rulesWindow.CurRule != null)
             {
-                rulesWindow.CurRule.ID = RulesList.Count.ToString();
+                // If a rule was created add it to the list and set it's ID
+                rulesWindow.CurRule.ID = RulesList.Count + 1;
                 RulesList.Add(rulesWindow.CurRule);
             }
             
@@ -222,8 +229,8 @@ namespace ReNam
         /// <summary>
         /// Removes the currently selected rule from the list
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that sent the event</param>
+        /// <param name="e">The event</param>
         private void OnRemoveRule(object sender, RoutedEventArgs e)
         {
             _Rules.Items.Remove(_Rules.SelectedItem);
