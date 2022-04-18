@@ -76,10 +76,11 @@ namespace ReNam
             IsRightToLeft = isRightToLeft;
         }
 
-        public InsertRule(string insert, InsertPosition insertPos, string text)
+        public InsertRule(string insert, InsertPosition insertPos, string text, bool isRightToLeft)
         {
             InsertText = insert;
             InsertPos = insertPos;
+            IsRightToLeft = isRightToLeft;
 
             switch (insertPos)
             {
@@ -108,13 +109,17 @@ namespace ReNam
                     sb.Append(insertText);
                     break;
                 case InsertPosition.Position:
-                    if (isRightToLeft)
+                    // Only apply rule if the given position is valid
+                    if (posInt <= sb.Length)
                     {
-                        sb.Insert(current.Length - posInt, insertText);
-                    }
-                    else
-                    {
-                        sb.Insert(posInt, insertText);
+                        if (isRightToLeft)
+                        {
+                            sb.Insert(current.Length - posInt, insertText);
+                        }
+                        else
+                        {
+                            sb.Insert(posInt, insertText);
+                        }
                     }
                     break;
                 case InsertPosition.AfterText:

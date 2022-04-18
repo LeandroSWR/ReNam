@@ -255,7 +255,11 @@ namespace ReNam
         /// <param name="e">The event</param>
         private void OnRemoveRule(object sender, RoutedEventArgs e)
         {
-            _Rules.Items.Remove(_Rules.SelectedItem);
+            RulesList.RemoveAt(_Rules.SelectedIndex);
+            if (_UseRulesCheck.IsChecked ?? false)
+            {
+                UpdateNewNames();
+            }
         }
     }
 }

@@ -57,11 +57,11 @@ namespace ReNam
                             break;
                         case InsertPosition.AfterText:
                             curRule = new InsertRule(_InsertText.Text, insertPos,
-                            _InsertATTextBox.Text);
+                            _InsertATTextBox.Text, _InsertPositionLRCheck.IsChecked ?? false);
                             break;
                         case InsertPosition.BeforeText:
                             curRule = new InsertRule(_InsertText.Text, insertPos,
-                            _InsertBTTextBox.Text);
+                            _InsertBTTextBox.Text, _InsertPositionLRCheck.IsChecked ?? false);
                             break;
                         default:
                             curRule = new InsertRule(_InsertText.Text, insertPos);
