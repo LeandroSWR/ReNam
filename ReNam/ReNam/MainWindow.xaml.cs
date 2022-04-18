@@ -179,7 +179,7 @@ namespace ReNam
                     if (onList.Count <= nnList.Count)
                     {
                         NNList[onList.Count - 1].Visibility = "Visible";
-                        NNList[onList.Count - 1].Format = onList[onList.Count - 1].Format;
+                        NNList[onList.Count - 1].Format = '.' + onList[onList.Count - 1].Format;
                     }
                 }
                 // If the method was called from the new names list
@@ -222,8 +222,30 @@ namespace ReNam
                 // If a rule was created add it to the list and set it's ID
                 rulesWindow.CurRule.ID = RulesList.Count + 1;
                 RulesList.Add(rulesWindow.CurRule);
+
+                if (_UseRulesCheck.IsChecked ?? false)
+                {
+                    UpdateNewNames();
+                }
             }
             
+        }
+
+        private void UpdateNewNames()
+        {
+            NNList.Clear();
+            for (int i = 0; i < onList.Count; i++)
+            {
+                string current = onList[i].Name;
+                for (int j = 0; j < RulesList.Count; j++)
+                {
+                    current = RulesList[j].ApplyRule(current);
+                }
+                NNList.Add(new FileName(
+                        current,
+                        onList[i].Path,
+                        '.' + onList[i].Format));
+            }
         }
 
         /// <summary>

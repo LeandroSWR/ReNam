@@ -27,11 +27,11 @@ namespace ReNam
             set => posInt = value;
         }
 
-        private bool isLeftToRight;
-        public bool IsLeftToRight
+        private bool isRightToLeft;
+        public bool IsRightToLeft
         {
-            get => isLeftToRight;
-            set => isLeftToRight = value;
+            get => isRightToLeft;
+            set => isRightToLeft = value;
         }
 
         private string afterTextString;
@@ -68,12 +68,12 @@ namespace ReNam
             InsertPos = insertPos;
         }
 
-        public InsertRule(string insert, InsertPosition insertPos, int posInt, bool isLeftToRight)
+        public InsertRule(string insert, InsertPosition insertPos, int posInt, bool isRightToLeft)
         {
             InsertText = insert;
             InsertPos = insertPos;
             PosInt = posInt;
-            IsLeftToRight = IsLeftToRight;
+            IsRightToLeft = isRightToLeft;
         }
 
         public InsertRule(string insert, InsertPosition insertPos, string text)
@@ -95,9 +95,46 @@ namespace ReNam
 
         public string ApplyRule(string current)
         {
-            // Applies rules here
+            StringBuilder sb = new StringBuilder(current);
+            int index;
 
-            return current;
+            switch (insertPos)
+            {
+                default:
+                case InsertPosition.Prefix:
+                    sb.Insert(0, insertText);
+                    break;
+                case InsertPosition.Suffix:
+                    sb.Append(insertText);
+                    break;
+                case InsertPosition.Position:
+                    if (isRightToLeft)
+                    {
+                        sb.Insert(current.Length - posInt, insertText);
+                    }
+                    else
+                    {
+                        sb.Insert(posInt, insertText);
+                    }
+                    break;
+                case InsertPosition.AfterText:
+                    // Get the insert to where we need to insert the string
+                    index = isRightToLeft ? current.LastIndexOf(afterTextString) : current.IndexOf(afterTextString);
+                    index += afterTextString.Length;
+                    sb.Insert(index, insertText);
+                    break;
+                case InsertPosition.BeforeText:
+                    // Get the index to where we need to insert the string
+                    index = isRightToLeft ? current.LastIndexOf(beforeTextString) : current.IndexOf(beforeTextString);
+                    sb.Insert(index, insertText);
+
+                    break;
+                case InsertPosition.ReplaceCurrentName:
+                    sb.Replace(current, insertText);
+                    break;
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
